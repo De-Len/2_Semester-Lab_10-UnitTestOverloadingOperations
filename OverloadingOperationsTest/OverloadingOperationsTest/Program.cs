@@ -31,6 +31,12 @@ namespace OverloadingOperations
             }
         }
 
+        public SquareMatrix(int[,] matrix)
+        {
+            _matrix = matrix;
+        }
+
+
         // Далее перегрузки:
         public static SquareMatrix operator +(SquareMatrix matrix1, SquareMatrix matrix2)
         {
@@ -354,17 +360,17 @@ namespace OverloadingOperations
             return MatrixString;
         }
 
-        public int CompareTo(SquareMatrix other)
+        public string CompareTo(SquareMatrix other)
         {
             if (other == null)
             {
-                return 1; // Матрица не существует, поэтому текущая матрица больше
+                return "Матрица больше"; // Матрица не существует, поэтому текущая матрица больше
             }
             if (this.Value.GetLength(0) != other.Value.GetLength(0) || this.Value.GetLength(1) != other.Value.GetLength(1))
             {
-                return -1;
+                return "Матрица меньше";
             }
-            return 0;
+            return "Матрицы равны";
         }
         public override bool Equals(object obj)
         {
@@ -595,6 +601,7 @@ namespace OverloadingOperations
             Console.WriteLine();
             Console.WriteLine("Хеш код первой матрицы:");
             ExampleMatrix1.PrintHashCode();
+
         }
     }
 }

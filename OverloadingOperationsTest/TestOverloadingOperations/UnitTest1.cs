@@ -5,132 +5,114 @@ namespace TestOverloadingOperations
     [TestClass]
     public class UnitTest1
     {
-        SquareMatrix TestMatrix1 = new SquareMatrix(3);
-        SquareMatrix TestMatrix2 = new SquareMatrix(4);
+        SquareMatrix TestMatrix1 = new SquareMatrix(new int[3, 3] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 } });
+        SquareMatrix TestMatrix2 = new SquareMatrix(new int[3, 3] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 } });
 
         [TestMethod]
         public void TestSum()
         {
-            SquareMatrix TestResultMatrix = TestMatrix1 + TestMatrix2;
+            SquareMatrix expectedMatrix = new SquareMatrix(new int[3, 3] { { 0, 2, 4 }, { 6, 8, 10 }, { 12, 14, 16 } });
+            SquareMatrix actualMatrix = TestMatrix1 + TestMatrix2;
+            Assert.AreEqual(expectedMatrix, actualMatrix);
         }
         [TestMethod]
         public void TestProduct()
         {
-            SquareMatrix TestResultMatrix = TestMatrix1 * TestMatrix2;
+            SquareMatrix expectedMatrix = new SquareMatrix(new int[3, 3] { { 15, 18, 21 }, { 42, 54, 66 }, { 69, 90, 111 } });
+            SquareMatrix actualMatrix = TestMatrix1 * TestMatrix2;
+            Assert.AreEqual(expectedMatrix, actualMatrix);
         }
         [TestMethod]
         public void TestIsNotGreater()
         {
-            bool IsGreater = TestMatrix1 > TestMatrix2;
-            Assert.IsFalse(IsGreater);
+            bool isGreater = TestMatrix1 > TestMatrix2;
+            Assert.IsFalse(isGreater);
         }
         [TestMethod]
         public void TestIsNotLess()
         {
-            bool IsLess = TestMatrix1 < TestMatrix2;
-            Assert.IsFalse(IsLess);
+            bool isLess = TestMatrix1 < TestMatrix2;
+            Assert.IsFalse(isLess);
         }
         [TestMethod]
-        public void TestIsNotGreaterOrEqual()
+        public void TestIsGreaterOrEqual()
         {
-            bool IsGreaterOrEqual = TestMatrix1 >= TestMatrix2;
-            Assert.IsFalse(IsGreaterOrEqual);
+            bool isGreaterOrEqual = TestMatrix1 >= TestMatrix2;
+            Assert.IsTrue(isGreaterOrEqual);
         }
         [TestMethod]
-        public void TestIsNOtLessOrEqual()
+        public void TestIsLessOrEqual()
         {
-            bool IsLessOrEqual = TestMatrix1 <= TestMatrix2;
-            Assert.IsFalse(IsLessOrEqual);
+            bool isLessOrEqual = TestMatrix1 <= TestMatrix2;
+            Assert.IsTrue(isLessOrEqual);
         }
         [TestMethod]
-        public void TestIsNOtEqual()
+        public void TestIsEqual()
         {
-            bool IsEqual = TestMatrix1 == TestMatrix2;
-            Assert.IsFalse(IsEqual);
+            bool isEqual = TestMatrix1 == TestMatrix2;
+            Assert.IsTrue(isEqual);
         }
         [TestMethod]
         public void TestIsNotEqual()
         {
-            bool IsEqualNotEqual = TestMatrix1 != TestMatrix2;
-            Assert.IsTrue(IsEqualNotEqual);
+            bool isEqualNotEqual = TestMatrix1 != TestMatrix2;
+            Assert.IsFalse(isEqualNotEqual);
         }
         [TestMethod]
         public void TestTypeConversion()
         {
-            int[,] TestMatrixToInt = (int[,])TestMatrix1;
-            Assert.IsInstanceOfType(TestMatrixToInt, typeof(int[,]));
+            int[,] testMatrixToInt = (int[,])TestMatrix1;
+            Assert.IsInstanceOfType(testMatrixToInt, typeof(int[,]));
         }
         [TestMethod]
         public void TestCalculateDeterminant()
         {
-            int[,] TestMatrixToInt = (int[,])TestMatrix1;
-            TestMatrix1.CalculateDeterminant(TestMatrixToInt);
+            int[,] testMatrixToInt = (int[,])TestMatrix1;
+            Assert.AreEqual(TestMatrix1.CalculateDeterminant(testMatrixToInt), 0);
         }
         [TestMethod]
         public void TestGetSubMatrix()
         {
-            int[,] TestMatrixToInt = (int[,])TestMatrix1;
-            TestMatrix1.GetSubMatrix(TestMatrixToInt, 3, 3);
+            int[,] expectedMatrix = new int[,] { { 0, 1 }, { 3, 4 } };
+            int[,] actualMatrix = TestMatrix1.GetSubMatrix((int[,])TestMatrix1, 2, 2);
+            CollectionAssert.AreEqual((expectedMatrix), (actualMatrix));
         }
         [TestMethod]
         public void TestInvertMatrix()
         {
-            int[,] TestMatrixToInt = (int[,])TestMatrix1;
-            TestMatrix1.InvertMatrix(TestMatrixToInt);
+            double[,] actualMatrix = TestMatrix1.InvertMatrix((int[,])TestMatrix1);
+            Assert.IsNotNull(actualMatrix);
         }
         [TestMethod]
         public void TestGetAdjointMatrix()
         {
-            int[,] TestMatrixToInt = (int[,])TestMatrix1;
-            TestMatrix1.GetAdjointMatrix(TestMatrixToInt);
+            int[,] expectedMatrix = new int[,] { { -3, 6, -3 }, { 6, -12, 6 }, { -3, 6, -3 } };
+            int[,] actualMatrix = TestMatrix1.GetAdjointMatrix((int[,])TestMatrix1);
+            CollectionAssert.AreEqual((expectedMatrix), (actualMatrix));
         }
         [TestMethod]
         public void TestTransposeMatrix()
         {
-            int[,] TestMatrixToInt = (int[,])TestMatrix1;
-            TestMatrix1.GetAdjointMatrix(TestMatrixToInt);
-        }
-        [TestMethod]
-        public void TestPrintMatrix()
-        {
-            TestMatrix1.PrintMatrix();
-        }
-        [TestMethod]
-        public void TestPrintDeterminant()
-        {
-            TestMatrix1.PrintDeterminant();
-        }
-        [TestMethod]
-        public void TestPrintInvertMatrix()
-        {
-            TestMatrix1.PrintInvertMatrix();
-        }
-        [TestMethod]
-        public void TestPrintClone()
-        {
-            TestMatrix1.PrintMatrix();
-        }
-        [TestMethod]
-        public void TestPrintHashCode()
-        {
-            TestMatrix1.PrintHashCode();
+            int[,] expectedMatrix = new int[,] { { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 } };
+            int[,] actualMatrix = TestMatrix1.TransposeMatrix((int[,])TestMatrix1);
+            CollectionAssert.AreEqual((expectedMatrix), (actualMatrix));
         }
         [TestMethod]
         public void TestToString()
         {
-            string TestMatrixToString = TestMatrix1.ToString();
-            Assert.IsInstanceOfType(TestMatrixToString, typeof(string));
+            string testMatrixToString = TestMatrix1.ToString();
+            Assert.IsInstanceOfType(testMatrixToString, typeof(string));
         }
         [TestMethod]
         public void TestCompareTo()
         {
-            Assert.AreEqual(TestMatrix2.CompareTo(TestMatrix1), -1);
+            Assert.AreEqual(TestMatrix2.CompareTo(TestMatrix1), "Матрицы равны");
         }
         [TestMethod]
         public void TestEquals()
         {
-            bool result = TestMatrix1.Equals(TestMatrix2);
-            Assert.IsInstanceOfType(result, typeof(bool));
+            bool areEqual = TestMatrix1.Equals(TestMatrix2);
+            Assert.IsTrue(areEqual);
         }
         [TestMethod]
         public void TestGetHashCode()
